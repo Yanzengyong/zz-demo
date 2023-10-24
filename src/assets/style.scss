@@ -1,0 +1,27 @@
+@mixin flex($direction: row, $mainAxis: center, $crossAxis: center, $multiAxis: center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $mainAxis;
+    align-items: $crossAxis;
+    align-content: $multiAxis;
+}
+
+@mixin scrollBar {
+    &::-webkit-scrollbar-track-piece {
+        background: #d3dce6;
+    }
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #99a9bf;
+        border-radius: 20px;
+    }
+}
+
+
+// ----------------- variables -------------------------------- //
+$darkBlue: rgba(20,70,141, 1);
+$cardBorderRadius: 8px;
