@@ -9,15 +9,18 @@ const treeData = ref([
     children: [
       {
         id: 2,
-        label: '激光类'
+        label: '激光类',
+        icon: 'src/assets/images/baseIcon.png'
       }, 
       {
         id: 3,
-        label: '光源'
+        label: '光源',
+        icon: 'src/assets/images/baseIcon.png'
       }, 
       {
         id: 4,
         label: '镜片类',
+        icon: 'src/assets/images/baseIcon.png',
         children: [
           {
             id: 7,
@@ -67,11 +70,13 @@ const treeData = ref([
       }, 
       {
         id: 5,
-        label: '光学仪器'
+        label: '光学仪器',
+        icon: 'src/assets/images/baseIcon.png'
       }, 
       {
         id: 6,
-        label: '光学器件'
+        label: '光学器件',
+        icon: 'src/assets/images/baseIcon.png'
       }
     ]
   }
@@ -94,6 +99,12 @@ const renderStoreyData = ref([
 
 const getClass = (isLast) => {
   if (renderStoreyData.value.length === 1) {
+    if (isLast) {
+      return 'storey'
+    } else {
+      return 'storey_img'
+    }
+  } else {
     if (isLast) {
       return 'storey'
     } else {
@@ -124,40 +135,88 @@ const findTreeNode = (treeData, labelToFind) =>{
   }
 
   // 如果未找到匹配的节点，返回null
+  return '';
+}
+
+const findParentNode = (treeData, labelToFind, parent = null) => {
+  // 遍历树结构数据
+  for (let i = 0; i < treeData.length; i++) {
+    const currentNode = treeData[i];
+
+    // 如果当前节点的label等于要查找的值，返回父节点
+    if (currentNode.label === labelToFind) {
+      return parent;
+    }
+
+    // 如果当前节点有子节点，递归查找子节点，传递当前节点作为父节点
+    if (currentNode.children && currentNode.children.length > 0) {
+      const childResult = findParentNode(currentNode.children, labelToFind, currentNode);
+
+      // 如果在子节点中找到了对应的值，返回子节点的结果
+      if (childResult) {
+        return childResult;
+      }
+    }
+  }
+
+  // 如果未找到匹配的节点，返回null
   return null;
 }
 
 const nodeClick = (node, parentNode) => {
-  console.log('node===', node, parentNode)
+  // console.log('node===', node)
+  // console.log('parentNode===', parentNode)
+  // console.log('renderStoreyData===', renderStoreyData.value)
 
+  const clickIndex = renderStoreyData.value.findIndex((item) => {
+    return parentNode.parentName === item.parentName
+  })
+  // console.log('renderStoreyData.value.length - 1 - 2', renderStoreyData.value.length - 1 - 2)
+  // console.log('clickIndex', clickIndex)
+  if (renderStoreyData.value.length - 2 > clickIndex) {
+    // 此时，点击是非最后两个层级
+    alert('只能点击最后一层或倒数第二层')
+    return
+  }
 
-  const targetObj = findTreeNode(treeData.value, node.name)
-  console.log('renderStoreyData.value', renderStoreyData.value, targetObj)
-  renderStoreyData.value.push({
+  // 只有一个节点且不是最后一层时
+  if (parentNode.list.length === 1 && clickIndex !== renderStoreyData.value.length - 1) {
+    console.log('!')
+    const targetObj = findParentNode(treeData.value, node.name)
+    // 收缩
+    renderStoreyData.value.pop()
+    renderStoreyData.value[renderStoreyData.value.length - 1].list = targetObj.children.map((item) => {
+      return {
+        name: item.label,
+        ...item
+      }
+    })
+  } else {
+
+    const targetObj = findTreeNode(treeData.value, node.name)
+
+    if (!targetObj.children || targetObj.children && targetObj.children.length === 0) {
+      alert('该节点下无节点')
+      return
+    }
+    // 展开
+    renderStoreyData.value = renderStoreyData.value.map((item) => {
+      if (item.parentName === parentNode.parentName) {
+        item.list = [node]
+      }
+      return item
+    })
+    renderStoreyData.value.push({
     parentId: targetObj.id,
     parentName: targetObj.label,
     list: targetObj.children.map((item) => {
-      return {
-        name: item.label,
-        tagBg: 'red'
-      }
+        return {
+          name: item.label,
+          tagBg: 'red'
+        }
+      })
     })
-  })
-  console.log('renderStoreyData.value', renderStoreyData.value)
-
-  renderStoreyData.value = renderStoreyData.value.map((item)=> {
-    if (parentNode.parentName === item.parentName) {
-      if (item.list.length === 1) {
-        // 收缩
-
-        // item.list = parentNode.list
-      } else {
-        // 展开
-        item.list = [node]
-      }
-    }
-    return item
-  })
+  }
 }
 </script>
 
@@ -169,12 +228,12 @@ const nodeClick = (node, parentNode) => {
         <span>光学部件</span>
       </div>
     </div>
-    <div v-for="(item, index) in renderStoreyData" :key="item.parentName" :class="getClass(index === treeData.length - 1)">
+    <div v-for="(item, index) in renderStoreyData" :key="item.parentName" :class="getClass(index === renderStoreyData.length - 1)">
       <div v-for="node in item.list" :key="node.name" class="ment-item-box">
         <div v-if="node.icon" class="ment-item-img" :style="{backgroundImage: `url(${node.icon})`}" @click="nodeClick(node, item)">
           {{ node.name }}
         </div>
-        <div v-else class="ment-item" :style="{backgroundColor: node.tagBg, borderColor: node.tagBg}" >
+        <div v-else class="ment-item" :style="{backgroundColor: node.tagBg, borderColor: node.tagBg}" @click="nodeClick(node, item)">
           {{ node.name }}
         </div>
       </div>
@@ -242,6 +301,7 @@ const nodeClick = (node, parentNode) => {
   display: flex;
   align-content: center;
   justify-content: center;
+  margin-right: 20px;
 }
 
 .ment-item-img{
@@ -262,7 +322,8 @@ const nodeClick = (node, parentNode) => {
 } */
 .ment-item{
   cursor: pointer;
-  width: 80px;
+  width: auto;
+  padding: 0 16px;
   height: 30px;
   border-radius: 10px;
   border-width: 1px;
