@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Message from 'vue-m-message'
 
 //1. 创建axios对象
 const service = axios.create({
@@ -46,7 +47,7 @@ service.interceptors.response.use(response => {
     }
   }
   //提示
-  alert(error.message)
+  Message.error(error.message)
   /***** 处理结束 *****/
   return Promise.reject(error.message);
 });

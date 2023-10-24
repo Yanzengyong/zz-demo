@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
-
+import Message from 'vue-m-message'
 
 const props = defineProps({
   treeData: {
@@ -111,7 +111,7 @@ const nodeClick = (node, parentNode) => {
     const targetObj = findTreeNode(props.treeData, node.label)
 
     if (!targetObj.children || targetObj.children && targetObj.children.length === 0) {
-      alert('该节点下无节点')
+      Message.info('该节点下无节点')
       return
     }
     // 展开

@@ -9,6 +9,7 @@ import PolicyInterpretationCard from './components/cards/PolicyInterpretationCar
 import CompanyProductChart from './components/charts/CompanyProductChart.vue';
 import CompareChart from './components/charts/CompareChart.vue';
 import { Policy, Product } from './datatypes';
+import Message from 'vue-m-message'
 
 import { exportGet } from './service/action'
 
@@ -84,7 +85,7 @@ const addCompareProduct = (row: Product) => {
   const idx = comparedProductNames.indexOf(row.name);
   if (idx == -1) {
     if (comparedProductNames.length >= 3) {
-      alert('最多添加3个产品进行比对');
+      Message.info('最多添加3个产品进行比对')
       return;
     }
 
@@ -107,7 +108,7 @@ const testAction = async () => {
 const compareProduct = () => {
 
   if (comparedProductNames.length < 2) {
-    alert('请选择至少两个产品进行比对');
+    Message.info('请选择至少两个产品进行比对')
     return;
   }
 

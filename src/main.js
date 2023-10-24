@@ -1,5 +1,6 @@
 import './assets/main.css'
 import 'animate.css';
+import 'vue-m-message/dist/style.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
