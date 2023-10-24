@@ -107,10 +107,10 @@ const compareProduct = () => {
 
 // 查看产品的关系
 let currentProductIndex = ref(0);
+let currentProductName = ref('')
 const viewRelation = (row: Product, index: number) => {
   currentProductIndex.value = index;
-  console.log('product : ', row);
-  
+  currentProductName.value = row.name;
 }
 
 /*************************** storey上部分层级展开显示 ****************************/
@@ -226,7 +226,7 @@ const treeData = ref([
       </TableCard>
 
       <div style="height: 200px;">
-        <CompanyProductChart></CompanyProductChart>
+        <CompanyProductChart :productName="currentProductName"></CompanyProductChart>
       </div>
     </div>
 
