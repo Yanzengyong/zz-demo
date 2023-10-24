@@ -97,23 +97,17 @@ const nodeClick = (node, parentNode) => {
     return parentNode.parentName === item.parentName
   })
 
-  if (renderStoreyData.value.length - 2 > clickIndex) {
-    // 此时，点击是非最后两个层级
-    alert('只能点击最后一层或倒数第二层')
-    return
-  }
-
   // 只有一个节点且不是最后一层时
   if (parentNode.list.length === 1 && clickIndex !== renderStoreyData.value.length - 1) {
-    console.log('!')
+    console.log('收缩!')
     const targetObj = findParentNode(props.treeData, node.label)
-    // 收缩
-    renderStoreyData.value.pop()
+    // 收缩 
+    renderStoreyData.value.splice(clickIndex + 1)
     renderStoreyData.value[renderStoreyData.value.length - 1].list = targetObj.children.map((item) => {
       return item
     })
   } else {
-
+    console.log('展开!')
     const targetObj = findTreeNode(props.treeData, node.label)
 
     if (!targetObj.children || targetObj.children && targetObj.children.length === 0) {
@@ -202,8 +196,8 @@ const nodeClick = (node, parentNode) => {
   width: 100%;
   height: 100px;
   /* min-height: 200px; */
-  /* background-image: url('@/assets/images/Group.png'); */
-  background: skyblue;
+  background-image: url('@/assets/images/Group.png');
+  /* background: skyblue; */
   border-radius: 90%;
   background-size: 100% 80%;
   background-repeat: no-repeat;
