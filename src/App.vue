@@ -10,6 +10,8 @@ import CompanyProductChart from './components/charts/CompanyProductChart.vue';
 import CompareChart from './components/charts/CompareChart.vue';
 import { Policy, Product } from './datatypes';
 
+import { exportGet } from './service/action'
+
 /*************************** 政策相关 ****************************/
 
 const policyTableHeaders: TableHeader[] = [
@@ -94,6 +96,13 @@ const addCompareProduct = (row: Product) => {
 
 const compareVisible = ref(false)
 
+const testAction = async () => {
+  const res = await exportGet({
+    name: 'yzy',
+    age: '29'
+  })
+  //
+}
 // 比对产品
 const compareProduct = () => {
 

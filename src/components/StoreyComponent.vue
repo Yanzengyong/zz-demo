@@ -151,7 +151,7 @@ const nodeClick = (node, parentNode) => {
         <div v-else class="ment-item" :style="{backgroundColor: node.tagBg, borderColor: node.tagBg}" @click="nodeClick(node, item)">
           {{ node.label }}
         </div> -->
-        <div class="ment-item-img" :style="{backgroundImage: `url(src/assets/images/baseIcon.png)`}" @click="nodeClick(node, item)">
+        <div class="ment-item-img" :style="{backgroundImage: `url(src/assets/images/baseIcon.png)`}" :title="node.label" @click="nodeClick(node, item)">
           {{ node.label }}
         </div>
       </div>
@@ -232,12 +232,14 @@ const nodeClick = (node, parentNode) => {
   height: 100px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
   margin-right: 20px;
   border-radius: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+  line-height: 100px;
 }
 /* .ment-item-img:last-child{
   margin-right: 0;

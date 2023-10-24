@@ -1,7 +1,7 @@
 <template>
   <Transition enter-active-class="animate__animated animate__zoomIn"
     leave-active-class="animate__animated animate__zoomOut">
-     <div class="compare-dialog-box" v-show="visiable">
+     <div class="compare-dialog-box" v-if="visiable">
       <div class="header-box">
         <h3>{{ title }}</h3>
         <img class="close-img" src="../../assets/images/close.png" alt="关闭" @click="emit('update:visiable', false)">
@@ -24,7 +24,7 @@ import {
   LegendComponent,
 } from 'echarts/components';
 import VChart, { THEME_KEY } from 'vue-echarts';
-import { ref, provide, watch } from 'vue';
+import { ref, provide, watch, reactive } from 'vue';
 
 // 图标
 import CompanyIcon from '@/assets/images/title_icon.png';
@@ -33,8 +33,6 @@ import ProductIcon from '@/assets/images/baseIcon.png';
 use([
   CanvasRenderer,
   BarChart,
-  // TitleComponent,
-  // TooltipComponent,
   PolarComponent,
   LegendComponent,
 ]);
@@ -50,7 +48,7 @@ const props = defineProps({
   visiable: { type: Boolean }
 })
 const emit = defineEmits(['update:visiable'])
-let series
+let series = reactive([])
 console.log('???data', props.data)
 watch(() => props.data, (newValue) => {
   series = newValue.map((item) => {
@@ -65,6 +63,7 @@ watch(() => props.data, (newValue) => {
       }
     }
   })
+  console.log('series===', series)
 }, {
   immediate: true
 })
