@@ -1,7 +1,7 @@
 <template>
     <div class="table-card">
         <div class="table-card-header">
-            <div class="table-card-title">▶ {{ title }}</div>
+            <div class="table-card-title">{{ title }}</div>
             <div class="table-card-option">
                 <slot name="option"></slot>
             </div>
@@ -37,14 +37,14 @@ defineProps({
         color: $darkBlue;
         font-weight: bolder;
         flex: 1;
-        background-image: url("@/assets/images/title_icon.png");
+        background-image: url("@/assets/images/table-card-title.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
-        padding-left: 20px;
+        padding-left: 30px;
     }
 
     &-option {
-        width: 200px;
+        width: 120px;
         @include flex(row, flex-end, center);
     }
 
