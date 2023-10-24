@@ -97,12 +97,94 @@ const viewRelation = (row: Product, index: number) => {
   console.log('product : ', row);
   
 }
+
+/*************************** storey上部分层级展开显示 ****************************/
+
+const treeData = ref([
+  {
+    id: 1,
+    label: '光学部件',
+    children: [
+      {
+        id: 2,
+        label: '激光类',
+        icon: 'src/assets/images/baseIcon.png'
+      }, 
+      {
+        id: 3,
+        label: '光源',
+        icon: 'src/assets/images/baseIcon.png'
+      }, 
+      {
+        id: 4,
+        label: '镜片类',
+        icon: 'src/assets/images/baseIcon.png',
+        children: [
+          {
+            id: 7,
+            label: '透射镜片'
+          }, 
+          {
+            id: 8,
+            label: '反射镜片',
+            children: [
+              {
+                id: 12,
+                label: '平面反射镜片'
+              },
+              {
+                id: 13,
+                label: '球面反射镜片'
+              },
+              {
+                id: 14,
+                label: '非球面反射镜片',
+                children: [
+                  {
+                    id: 16,
+                    label: '紫外光非球面3D高反射率反射镜'
+                  }
+                ]
+              },
+              {
+                id: 15,
+                label: '半反射镜片'
+              }
+            ]
+          }, 
+          {
+            id: 9,
+            label: '折射镜'
+          }, 
+          {
+            id: 10,
+            label: '定位镜'
+          }, 
+          {
+            id: 11,
+            label: '声光偏转器'
+          }
+        ]
+      }, 
+      {
+        id: 5,
+        label: '光学仪器',
+        icon: 'src/assets/images/baseIcon.png'
+      }, 
+      {
+        id: 6,
+        label: '光学器件',
+        icon: 'src/assets/images/baseIcon.png'
+      }
+    ]
+  }
+])
 </script>
 
 <template>
   <main class="main-container">
     <div class="storey-container">
-      <Storey />
+      <Storey :treeData="treeData"/>
     </div>
     <div class="chart-container">
       <TableCard title="相关政策">
