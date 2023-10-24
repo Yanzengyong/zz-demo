@@ -122,18 +122,15 @@ const treeData = ref([
     children: [
       {
         id: 2,
-        label: '激光类',
-        icon: 'src/assets/images/baseIcon.png'
+        label: '激光类'
       }, 
       {
         id: 3,
-        label: '光源',
-        icon: 'src/assets/images/baseIcon.png'
+        label: '光源'
       }, 
       {
         id: 4,
         label: '镜片类',
-        icon: 'src/assets/images/baseIcon.png',
         children: [
           {
             id: 7,
@@ -183,13 +180,11 @@ const treeData = ref([
       }, 
       {
         id: 5,
-        label: '光学仪器',
-        icon: 'src/assets/images/baseIcon.png'
+        label: '光学仪器'
       }, 
       {
         id: 6,
-        label: '光学器件',
-        icon: 'src/assets/images/baseIcon.png'
+        label: '光学器件'
       }
     ]
   }
@@ -235,15 +230,8 @@ const treeData = ref([
       </div>
     </div>
 
-    <div class="compare-dialog-box" v-if="compareVisible">
-      <div class="header-box">
-        <h3>产品对比</h3>
-        <img class="close-img" src="./assets/images/close.png" alt="关闭" @click="compareVisible = false">
-      </div>
-      <div class="content-box">
-        <CompareChart :data="comparedProductList"/>
-      </div>
-    </div>
+    
+    <CompareChart title="产品对比" :data="comparedProductList" v-model:visiable="compareVisible"/>
     <PolicyInterpretationCard :title="currentPolicy.title" v-model:visiable="policyVisiable" />
   </main>
 </template>
@@ -281,43 +269,5 @@ const treeData = ref([
   }
 }
 
-.compare-dialog-box{
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 600px;
-  border-radius: 8px 8px 8px 8px;
-  opacity: 1;
-  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.4) 100%);
-  border: 1px solid #fff;
-  padding: 32px;
-  box-sizing: border-box;
-}
-.header-box{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 0 8px 0;
-}
-h3{
-  font-size: 20px;
-  font-family: Source Han Sans SC VF-Heavy, Source Han Sans SC VF;
-  font-weight: 800;
-  color: #35393F;
-  line-height: 16px;
-}
-.close-img{
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-}
-.content-box{
-  width: 100%;
-  height: calc(100% - 24px);
-  background: #E4E6F3;
-  border-radius: 8px;
-}
+
 </style>

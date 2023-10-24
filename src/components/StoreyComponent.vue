@@ -145,10 +145,13 @@ const nodeClick = (node, parentNode) => {
     </div>
     <div v-for="(item, index) in renderStoreyData" :key="item.parentName" :class="getClass(index === renderStoreyData.length - 1)" :style="{transform: `scale(${1 - (renderStoreyData.length - 1 - index) * 0.1})`}">
       <div v-for="node in item.list" :key="node.label" class="ment-item-box">
-        <div v-if="node.icon" class="ment-item-img" :style="{backgroundImage: `url(${node.icon})`}" @click="nodeClick(node, item)">
+        <!-- <div v-if="node.icon" class="ment-item-img" :style="{backgroundImage: `url(${node.icon})`}" @click="nodeClick(node, item)">
           {{ node.label }}
         </div>
         <div v-else class="ment-item" :style="{backgroundColor: node.tagBg, borderColor: node.tagBg}" @click="nodeClick(node, item)">
+          {{ node.label }}
+        </div> -->
+        <div class="ment-item-img" :style="{backgroundImage: `url(src/assets/images/baseIcon.png)`}" @click="nodeClick(node, item)">
           {{ node.label }}
         </div>
       </div>
@@ -234,7 +237,6 @@ const nodeClick = (node, parentNode) => {
   justify-content: center;
   cursor: pointer;
   margin-right: 20px;
-  background-color: burlywood;
   border-radius: 10px;
 }
 /* .ment-item-img:last-child{
