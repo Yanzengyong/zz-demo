@@ -7,7 +7,7 @@ const service = axios.create({
   withCredentials: true
 });
 
-//2. 请求拦截器
+//2. 请求拦截器 
 service.interceptors.request.use(config => {
   return config;
 }, error => {

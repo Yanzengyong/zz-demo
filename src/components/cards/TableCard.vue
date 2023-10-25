@@ -36,7 +36,7 @@ defineProps({
     &-title {
         color: $darkBlue;
         font-weight: bolder;
-        flex: 1;
+        width: 200px;
         background-image: url("@/assets/images/table-card-title.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
@@ -44,7 +44,7 @@ defineProps({
     }
 
     &-option {
-        width: 120px;
+        flex: 1;
         @include flex(row, flex-end, center);
     }
 
@@ -52,4 +52,5 @@ defineProps({
         width: 100%;
         flex: 1;
     }
-}</style>
+}
+</style>

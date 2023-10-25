@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, reactive } from 'vue';
+import { watch, reactive, onMounted } from 'vue';
 import { use } from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
 import { GraphChart } from 'echarts/charts';
@@ -37,6 +37,10 @@ const props = defineProps({
 });
 
 
+onMounted(async () => {
+    getRelations(props.productName);
+});
+
 watch(() => props.productName, (newVal, oldVal) => {
     getRelations(newVal);
 })
@@ -48,9 +52,9 @@ interface Node {
 
 const charOption = reactive({
     title: {
-        text: '产品产供关系',
+        text: props.productName,
         textStyle: {
-            fontSize: 14,
+            fontSize: 20,
             color: 'rgba(20,70,141, 1)'
         }
     },
@@ -60,19 +64,20 @@ const charOption = reactive({
         {
             type: 'graph',
             layout: 'force',
-            symbolSize: 30,
+            symbolSize: 60,
             roam: true,
             label: {
                 show: true,
-                position: 'bottom'
+                position: 'bottom',
+                fontSize: 20
             },
             force: {
-                repulsion: 1300
+                repulsion: 10000
             },
             edgeSymbol: ['circle', 'arrow'],
-            edgeSymbolSize: [4, 10],
+            edgeSymbolSize: [0, 15],
             edgeLabel: {
-                fontSize: 12,
+                fontSize: 20,
                 align: 'center',
                 verticalAlign: 'center',
                 color: 'rgba(20,70,141, 1)',
@@ -80,13 +85,13 @@ const charOption = reactive({
                 borderColor: "rgba(20,70,141, 1)",
                 borderType: 'solid',
                 borderWidth: 1,
-                borderRadius: 20,
-                padding: [2, 4]
+                borderRadius: 30,
+                padding: [5, 10]
             },
             data: [],
             links: [],
             lineStyle: {
-                opacity: 0.9,
+                opacity: 1,
                 width: 1,
                 curveness: 0
             }
@@ -95,6 +100,10 @@ const charOption = reactive({
 });
 
 const getRelations = async function (productName) {
+    if (!productName) {
+        return;
+    }
+
     const productRelation: IProductRelations = await getProductRelations(productName);
     charOption.series[0].data = [];
     charOption.series[0].links = []
@@ -115,6 +124,8 @@ const getRelations = async function (productName) {
             label: {
                 show: true,
                 formatter: '生产',
+                backgroundColor: 'rgba(20,70,141, 1)',
+                color: '#fff'
             }
         })
     }

@@ -3,8 +3,8 @@
     leave-active-class="animate__animated animate__zoomOut">
      <div class="compare-dialog-box" v-if="visiable">
       <div class="header-box">
-        <h3>{{ title }}</h3>
-        <img class="close-img" src="../../assets/images/close.png" alt="关闭" @click="emit('update:visiable', false)">
+        <!-- <h3>{{ title }}</h3> -->
+        <!-- <img class="close-img" src="../../assets/images/close.png" alt="关闭" @click="emit('update:visiable', false)"> -->
       </div>
       <div class="content-box">
         <v-chart class="compare-chart" :option="option" autoresize />
@@ -118,17 +118,16 @@ const option = ref({
   height: 100%;
 }
 .compare-dialog-box{
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 600px;
-  border-radius: 8px 8px 8px 8px;
-  opacity: 1;
-  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.4) 100%);
-  border: 1px solid #fff;
-  padding: 32px;
+  // position: absolute;
+  // top: 10%;
+  // left: 50%;
+  width: 100%;
+  height: 100%;
+  // border-radius: 8px 8px 8px 8px;
+  // opacity: 1;
+  // background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.4) 100%);
+  // border: 1px solid #fff;
+  // padding: 32px;
   box-sizing: border-box;
 }
 .header-box{
