@@ -22,7 +22,7 @@ import CompanyIcon from '@/assets/images/node-icon-company.svg';
 import ProductIcon from '@/assets/images/node-icon-product.svg';
 
 // api
-import { IProductRelations, getProductRelations } from '../../api/index';
+import { IProductRelations, getProductRelations } from '../../service/index';
 
 use([
     CanvasRenderer,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import Storey from './components/StoreyComponent.vue'
 import ZButton from './components/btns/ZButton.vue';
 import LiteTable from './components/lite-table/LiteTable.vue';
@@ -8,10 +8,16 @@ import TableCard from './components/cards/TableCard.vue';
 import PolicyInterpretationCard from './components/cards/PolicyInterpretationCard.vue';
 import CompanyProductChart from './components/charts/CompanyProductChart.vue';
 import CompareChart from './components/charts/CompareChart.vue';
-import { Policy, Product } from './datatypes';
+import { Policy, Product, getProductList, } from './service/index';
 import Message from 'vue-m-message'
 
 import { exportGet } from './service/action'
+
+
+// onMounted(async () => {
+//   listProduct('光学部件');
+// })
+
 
 /*************************** 政策相关 ****************************/
 
@@ -59,17 +65,17 @@ const productTableHeaders: TableHeader[] = [
 
 let productTableData: Product[] = reactive([{
   name: '金属反射镜',
-  data: [2000, 1500, 3000, 2000, 3600, 5000, 1000]
 }, {
   name: '介质膜反射镜',
-  data: [2000, 4000, 6000, 1000, 3000, 2000, 1000]
 }, {
   name: '宽带介质膜反射镜',
-  data: [3000, 2500, 1000, 6000, 2600, 3000, 4000]
 }, {
   name: 'MEMS连续表面可变形反射镜',
-  data: [1000, 4500, 2000, 2900, 5600, 2800, 2000]
 }]);
+const listProduct = async function (chainNode: str) {
+  productTableData = await getProductList(chainNode);
+}
+
 
 let comparedProductNames: string[] = reactive([]);
 const comparedProductList = computed(() => {
@@ -133,11 +139,11 @@ const treeData = ref([
       {
         id: 2,
         label: '激光类'
-      }, 
+      },
       {
         id: 3,
         label: '光源'
-      }, 
+      },
       {
         id: 4,
         label: '镜片类',
@@ -145,7 +151,7 @@ const treeData = ref([
           {
             id: 7,
             label: '透射镜片'
-          }, 
+          },
           {
             id: 8,
             label: '反射镜片',
@@ -173,25 +179,25 @@ const treeData = ref([
                 label: '半反射镜片'
               }
             ]
-          }, 
+          },
           {
             id: 9,
             label: '折射镜'
-          }, 
+          },
           {
             id: 10,
             label: '定位镜'
-          }, 
+          },
           {
             id: 11,
             label: '声光偏转器'
           }
         ]
-      }, 
+      },
       {
         id: 5,
         label: '光学仪器'
-      }, 
+      },
       {
         id: 6,
         label: '光学器件'
@@ -199,12 +205,17 @@ const treeData = ref([
     ]
   }
 ])
+
+let currentNode = ref('光学部件');
+const onNodeChange = function(node) {
+  currentNode.value = node.label;
+}
 </script>
 
 <template>
   <main class="main-container">
     <div class="storey-container">
-      <Storey :treeData="treeData"/>
+      <Storey :treeData="treeData" @nodeChange="onNodeChange" />
     </div>
     <div class="chart-container">
       <TableCard title="相关政策">
@@ -222,9 +233,11 @@ const treeData = ref([
           <z-button @click="compareProduct">比对({{ comparedProductNames.length }})</z-button>
         </template>
         <template #body>
-          <LiteTable :table-headers="productTableHeaders" :table-data="productTableData" :activeIndex="currentProductIndex" height="150px">
+          <LiteTable :table-headers="productTableHeaders" :table-data="productTableData"
+            :activeIndex="currentProductIndex" height="150px">
             <template v-slot="scope">
-              <z-button type="text" @click="viewRelation(scope.row, scope.index)" style="margin-right: 10px;">查看关系</z-button>
+              <z-button type="text" @click="viewRelation(scope.row, scope.index)"
+                style="margin-right: 10px;">查看关系</z-button>
 
               <z-button type="text" @click="addCompareProduct(scope.row)">
                 <span v-if="comparedProductNames.indexOf(scope.row.name) == -1">添加比对</span>
@@ -240,8 +253,8 @@ const treeData = ref([
       </div>
     </div>
 
-    
-    <CompareChart title="产品对比" :data="comparedProductList" v-model:visiable="compareVisible"/>
+
+    <CompareChart title="产品对比" :data="comparedProductList" v-model:visiable="compareVisible" />
     <PolicyInterpretationCard :title="currentPolicy.title" v-model:visiable="policyVisiable" />
   </main>
 </template>
@@ -278,6 +291,4 @@ const treeData = ref([
     }
   }
 }
-
-
 </style>

@@ -9,7 +9,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['nodeClickChange'])
+const emit = defineEmits(['nodeChange'])
 
 
 const renderStoreyData = ref([])
@@ -95,7 +95,7 @@ const findParentNode = (treeData, labelToFind, parent = null) => {
 }
 
 const nodeClick = (node, parentNode) => {
-  emit('nodeClickChange', node)
+  emit('nodeChange', node)
   const clickIndex = renderStoreyData.value.findIndex((item) => {
     return parentNode.parentName === item.parentName
   })

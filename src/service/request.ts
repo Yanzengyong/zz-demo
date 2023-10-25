@@ -3,7 +3,7 @@ import Message from 'vue-m-message'
 
 //1. 创建axios对象
 const service = axios.create({
-  baseURL: 'http://www.123456.com',
+  baseURL: 'http://172.16.13.6:5000',
   withCredentials: true
 });
 
