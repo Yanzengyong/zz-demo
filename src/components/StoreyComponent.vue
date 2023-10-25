@@ -169,8 +169,8 @@ const nodeClick = (node, parentNode) => {
   height: 100%;
   position: relative;
   display: flex;
-  align-content: center;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
 }
 .kind-title{
@@ -179,10 +179,8 @@ const nodeClick = (node, parentNode) => {
   background-image: url('@/assets/images/kind_title_bg.png');
   background-size: 100%;
   background-repeat: no-repeat;
-  position: relative;
+  position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -201,7 +199,7 @@ const nodeClick = (node, parentNode) => {
 }
 
 .storey_img{
-  width: 100%;
+  width: 80%;
   height: 100px;
   /* min-height: 200px; */
   background-image: url('@/assets/images/Group.png');
@@ -249,9 +247,9 @@ const nodeClick = (node, parentNode) => {
   line-height: 100px;
   font-family: 'YouSheBiaoTiHei';
 }
-/* .ment-item-img:last-child{
+.ment-item-img:last-child{
   margin-right: 0;
-} */
+}
 .ment-item{
   cursor: pointer;
   width: auto;

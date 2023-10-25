@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainView from '../view/main.vue'
+import ChainView from '../view/chain.vue'
 import PolicyView from '../view/policy.vue'
 import ProductView from '../view/product.vue'
 import ProductRelationView from '../view/productRelation.vue'
@@ -10,8 +10,8 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'Main',
-      component: MainView
+      name: 'Chain',
+      component: ChainView
     },
     {
       path: '/policy',
