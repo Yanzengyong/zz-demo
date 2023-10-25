@@ -14,3 +14,7 @@ a,
   transition: 0.4s;
 }
 
+@font-face {
+  font-family: 'YouSheBiaoTiHei';
+  src: url('./fonts/YouSheBiaoTiHei-2.ttf');
+}

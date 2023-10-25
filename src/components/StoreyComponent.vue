@@ -183,6 +183,8 @@ const nodeClick = (node, parentNode) => {
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  font-family: 'YouSheBiaoTiHei';
+  font-size: 26px;
 }
 .content{
   display: flex;
@@ -240,6 +242,7 @@ const nodeClick = (node, parentNode) => {
   text-overflow: ellipsis;
   text-align: center;
   line-height: 100px;
+  font-family: 'YouSheBiaoTiHei';
 }
 /* .ment-item-img:last-child{
   margin-right: 0;
