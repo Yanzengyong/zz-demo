@@ -223,7 +223,9 @@ const nodeClick = (node, parentNode) => {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: 0.5s all;
 }
+
 
 .ment-item-box{
   display: flex;
