@@ -146,7 +146,7 @@ const nodeClick = (node, parentNode) => {
         <span>{{ renderStoreyData[0].parentName }}</span>
       </div>
     </div>
-    <div v-for="(item, index) in renderStoreyData" :key="item.parentName" :class="getClass(index === renderStoreyData.length - 1)" :style="{transform: `scale(${1 - (renderStoreyData.length - 1 - index) * 0.1})`}">
+    <div v-for="(item, index) in renderStoreyData" :key="item.parentName" :class="getClass(index === renderStoreyData.length - 1)" :style="getClass(index === renderStoreyData.length - 1) === 'storey_img' ? {transform: `perspective(500px) rotateX(35deg) scale(${1 - (renderStoreyData.length - 1 - index) * 0.1})`, boxShadow: '0 35px 35px -20px rgba(0, 0, 0, 0.6)'} : {}">
       <div v-for="node in item.list" :key="node.label" class="ment-item-box">
         <!-- <div v-if="node.icon" class="ment-item-img" :style="{backgroundImage: `url(${node.icon})`}" @click="nodeClick(node, item)">
           {{ node.label }}
@@ -223,7 +223,9 @@ const nodeClick = (node, parentNode) => {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: 0.5s all;
 }
+
 
 .ment-item-box{
   display: flex;
