@@ -5,7 +5,6 @@ import ZButton from '../components/btns/ZButton.vue';
 import LiteTable from '../components/lite-table/LiteTable.vue';
 import { TableHeader } from '../components/lite-table/LiteTable';
 import TableCard from '../components/cards/TableCard.vue';
-import PolicyInterpretationCard from '../components/cards/PolicyInterpretationCard.vue';
 import CompanyProductChart from '../components/charts/CompanyProductChart.vue';
 import CompareChart from '../components/charts/CompareChart.vue';
 import { Policy, Product } from '../datatypes';
@@ -13,42 +12,6 @@ import Message from 'vue-m-message'
 
 import { exportGet } from '../service/action'
 
-/*************************** 政策相关 ****************************/
-
-const policyTableHeaders: TableHeader[] = [
-  { key: 'title', name: '政策标题', width: '100%' },
-  { key: 'region', name: '地区', width: '100px' },
-  { key: '操作', name: '操作', width: '80px' }
-];
-
-let policyTableData: Policy[] = reactive([{
-  title: '集成电路战略性新兴产业集群行动计划',
-  region: '广东省'
-}, {
-  title: '关于加快集成电路产业发展的若干措施',
-  region: '深圳市'
-}, {
-  title: '武汉市加快集成电路产业高质量发展若干政策',
-  region: '武汉市'
-}, {
-  title: '重庆市加快集成电路产业发展若干政策',
-  region: '重庆市'
-}]);
-
-let currentPolicy: Policy = reactive({
-  title: '',
-  region: ''
-});
-
-
-let policyVisiable = ref(false);
-// 显示政策
-const showPolicy = (row: Policy) => {
-  currentPolicy.title = row.title;
-  currentPolicy.region = row.region;
-
-  policyVisiable.value = true;
-}
 
 /*************************** 产品相关 ****************************/
 
@@ -200,7 +163,7 @@ const treeData = ref([
       <Storey :treeData="treeData"/>
     </div>
     <div class="chart-container">
-      <TableCard title="相关政策">
+      <!-- <TableCard title="相关政策">
         <template #body>
           <LiteTable :table-headers="policyTableHeaders" :table-data="policyTableData" height="150px">
             <template v-slot="scope">
@@ -208,7 +171,7 @@ const treeData = ref([
             </template>
           </LiteTable>
         </template>
-      </TableCard>
+      </TableCard> -->
 
       <TableCard title="相关产品">
         <template #option>
@@ -235,7 +198,7 @@ const treeData = ref([
 
     
     <CompareChart title="产品对比" :data="comparedProductList" v-model:visiable="compareVisible"/>
-    <PolicyInterpretationCard :title="currentPolicy.title" v-model:visiable="policyVisiable" />
+
   </main>
 </template>
 
