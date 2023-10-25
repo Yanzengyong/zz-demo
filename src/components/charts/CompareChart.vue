@@ -49,26 +49,8 @@ const props = defineProps({
 })
 const emit = defineEmits(['update:visiable'])
 let series = reactive([])
-console.log('???data', props.data)
-watch(() => props.data, (newValue) => {
-  series = newValue.map((item) => {
-    return {
-      type: 'bar',
-      data: item.data,
-      coordinateSystem: 'polar',
-      name: item.name,
-      stack: 'a',
-      emphasis: {
-        focus: 'series'
-      }
-    }
-  })
-  console.log('series===', series)
-}, {
-  immediate: true
-})
 
-const option = ref({
+const option = reactive({
   color: ['#27CDB2', '#13458D', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
   angleAxis: {
     type: 'category',
@@ -84,7 +66,7 @@ const option = ref({
       fontWeight: 'bold',
       color: '#555'
     },
-    data: ['厚度', '电阻率', '直径', '弯曲度', '表面粗糙度']
+    data: ['直径', 'MPD', '电阻率范围', '螺位错密度（TSD）', '基平面位错密度（BPD）', '总厚度变化（TTV）', '弯曲度（Bow）', '翘曲度（Warp）', '表面粗糙度（Ra）', '厚度']
   },
   radiusAxis: {
     type: 'value',
@@ -103,12 +85,62 @@ const option = ref({
     }
   },
   polar: {},
-  series: series,
+  series: [],
   legend: {
     bottom: true
   }
 });
 
+const getData = (params) => {
+  console.log('?????')
+  return new Promise((resolve, reject) => {
+    const res = {
+      code: 200,
+      data: []
+    }
+    setTimeout(() => {
+      if (params.name === '48英寸碳化硅衬底') {
+        res.data = [200, 100, 20, 300, 500, 50, 80, 45, 200, 550]
+      } else {
+        res.data = [150, 200, 60, 150, 250, 80, 40, 90, 100, 350]
+      }
+      resolve(res)
+    }, 2000)
+  })
+}
+watch(() => props.data, (newValue) => {
+  console.log('newValue====', newValue)
+
+  newValue.forEach(async (item) => {
+    const _existIndex = option.series.findIndex((config) => config.name === item.name)
+    console.log('_existIndex', _existIndex)
+    if (_existIndex === -1) {
+      // 不存在，需要添加
+      const res = await getData({
+        name: item.name
+      })
+      console.log('resresresres', res)
+      if (res && res.code === 200) {
+        option.series.push({
+          type: 'bar',
+          data: res.data,
+          coordinateSystem: 'polar',
+          name: item.name,
+          stack: 'a',
+          emphasis: {
+            focus: 'series'
+          }
+        })
+      }
+    } else {
+      // option.series.splice(_existIndex, 1)
+    }
+
+  })
+
+}, {
+  immediate: true
+})
 
 </script>
 
