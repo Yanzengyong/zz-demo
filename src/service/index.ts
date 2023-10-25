@@ -15,8 +15,8 @@ export const getProductRelations = (productName: string): Promise<IProductRelati
 {
     return new Promise<IProductRelations>((resolve, reject) => {
         resolve({
-            produceCompanies: ['华为科技有限公司'],
-            supplyCompanies: ['小米科技有限公司', '魅族科技', 'vivo']
+            produceCompanies: ['深圳纳宏光电技术有限公司'],
+            supplyCompanies: ['大族激光科技有限公司', '深圳迪能激光科技有限公司 ', '武汉华俄激光工程有限公司', '深圳市联赢激光股份有限公司', '武汉楚天激光', '苏州天弘激光股份有限公司']
         })
     })
 }
