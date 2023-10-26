@@ -9,8 +9,8 @@
                     <div class="policy-card-name">
                         政策原文
                     </div>
-                    <div class="policy-card-text">
-                        {{ originText }}
+                    <div class="policy-card-text" id="policyOriginText">
+                        <VueOfficeDocx src="http://127.0.0.1:5000/static/policy/原文---广东省培育半导体及集成电路战略性新兴产业集群行动计划（2021-2025年）---广东省.docx" @render="rendered" />
                     </div>
                 </div>
 
@@ -18,8 +18,8 @@
                     <div class="policy-card-name">
                         政策解读
                     </div>
-                    <div class="policy-card-text">
-                        {{ interpretation }}
+                    <div class="policy-card-text" id="policyInterpretation">
+                        <VueOfficeDocx src="http://127.0.0.1:5000/static/policy/解读---广东省培育半导体及集成电路战略性新兴产业集群行动计划（2021-2025年）---广东省.docx" @render="rendered" />
                     </div>
                 </div>
             </div>
@@ -28,6 +28,9 @@
 </template>
 
 <script setup lang="ts">
+import VueOfficeDocx from '@vue-office/docx';
+import '@vue-office/docx/lib/index.css'
+
 defineProps({
     title: { type: String },
     originText: { type: String },
@@ -36,9 +39,20 @@ defineProps({
 })
 
 const emit = defineEmits(['update:visiable'])
+
+const rendered = function() {
+    console.log('rendered')
+}
+
 </script>
 
 <style lang="scss" scoped>
+.vue-office-docx {
+    overflow-y: auto !important;
+}
+.vue-office-docx-main {
+    overflow-y: auto !important;
+}
 .policy-compare-card {
     position: fixed;
     width: 80%;
@@ -49,6 +63,10 @@ const emit = defineEmits(['update:visiable'])
     border-radius: $cardBorderRadius;
 
     @include flex(column, flex-start, flex-start);
+
+    &-content {
+        overflow-y: auto;
+    }
 
     .close {
         position: absolute;
@@ -94,6 +112,11 @@ const emit = defineEmits(['update:visiable'])
         }
 
         border-radius: 10px;
+
+        &-text {
+            height: 100%;
+            overflow-y: auto;
+        }
     }
 }
 </style>

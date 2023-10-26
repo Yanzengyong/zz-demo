@@ -93,8 +93,9 @@
 
 
 <script setup lang="ts">
+import { watch } from 'vue'
 import { TableHeader } from './LiteTable';
-defineProps({
+const props = defineProps({
     tableData: Array<any>,
     tableHeaders: {
         type: Array<TableHeader>,
@@ -112,6 +113,9 @@ defineProps({
         default: '100%'
     }
 })
+
+watch(() => props.tableData, (n, o) => {
+}, { immediate: true})
 
 const widthFilter = (width: string) => {
     return width === '100%' ? 'flex: 1;' : `width: ${width};`;

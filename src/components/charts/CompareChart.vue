@@ -99,25 +99,25 @@ const getData = (params) => {
       data: []
     }
     setTimeout(() => {
-      if (params.name === '48英寸碳化硅衬底') {
+      if (params.company === '天科合达') {
         res.data = [200, 100, 20, 300, 500, 50, 80, 45, 200, 550]
       } else {
         res.data = [150, 200, 60, 150, 250, 80, 40, 90, 100, 350]
       }
       resolve(res)
-    }, 2000)
+    }, 500)
   })
 }
 watch(() => props.data, (newValue) => {
   console.log('newValue====', newValue)
 
   newValue.forEach(async (item) => {
-    const _existIndex = option.series.findIndex((config) => config.name === item.name)
+    const _existIndex = option.series.findIndex((config) => config.company === item.company)
     console.log('_existIndex', _existIndex)
     if (_existIndex === -1) {
       // 不存在，需要添加
       const res = await getData({
-        name: item.name
+        name: item.company
       })
       console.log('resresresres', res)
       if (res && res.code === 200) {
@@ -125,7 +125,7 @@ watch(() => props.data, (newValue) => {
           type: 'bar',
           data: res.data,
           coordinateSystem: 'polar',
-          name: item.name,
+          name: item.company,
           stack: 'a',
           emphasis: {
             focus: 'series'

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import ZButton from '../components/btns/ZButton.vue';
 import LiteTable from '../components/lite-table/LiteTable.vue';
 import { TableHeader } from '../components/lite-table/LiteTable';
@@ -15,7 +15,7 @@ const policyTableHeaders: TableHeader[] = [
   { key: '操作', name: '操作', width: '80px' }
 ];
 
-let policyTableData: Policy[] = reactive([
+let apiData = [
   {
     fileType: "pdf",
     region: "税务局",
@@ -51,7 +51,10 @@ let policyTableData: Policy[] = reactive([
     region: "重庆市",
     title: "重庆市加快集成电路产业发展若干政策"
   }
-]);
+]
+
+
+let policyTableData = ref<Array<Policy>>([]);
 
 let currentPolicy: Policy = reactive({
   title: '',
@@ -59,8 +62,17 @@ let currentPolicy: Policy = reactive({
   fileType: ''
 });
 
+onMounted(() => {
+  onAreaPick('');
+});
 
-let policyVisiable = ref(false);
+// 选择地区
+const onAreaPick = function (area) {
+  policyTableData.value = apiData.filter(policy => policy.region.indexOf(area) > -1);
+}
+
+
+let policyVisiable = ref(true);
 // 显示政策
 const showPolicy = (row: Policy) => {
   currentPolicy.title = row.title;
@@ -73,7 +85,7 @@ const showPolicy = (row: Policy) => {
 
 <template>
   <div class="policy-container">
-    <AreaPicker />
+    <AreaPicker @on-change="onAreaPick" />
     <LiteTable style="marginTop: 20px;" :table-headers="policyTableHeaders" :table-data="policyTableData" height="550px">
       <template v-slot="scope">
         <z-button type="text" @click="showPolicy(scope.row)">查看</z-button>

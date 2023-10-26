@@ -20,37 +20,34 @@ defineProps({
 
 const productTableHeaders: TableHeader[] = [
   { key: 'name', name: '产品名称', width: '100%' },
+  { key: 'company', name: '生产公司', width: '100%' },
   { key: '操作', name: '操作', width: '150px' }
 ];
 
 let productTableData: Product[] = reactive([{
-  name: '48英寸碳化硅衬底',
+  name: '8英寸碳化硅衬底',
+  company: '天科合达'
 }, {
   name: '8英寸碳化硅衬底',
+  company: '重庆三安'
 }]);
 
-let comparedProductNames: string[] = reactive([]);
-const comparedProductList = computed(() => {
-  return comparedProductNames.map((item) => {
-    return productTableData.find((prod) => {
-      return prod.name === item
-    })
-  })
-})
+let comparedProducts: Product[] = reactive([]);
 
 // 添加比对
 const addCompareProduct = (row: Product) => {
-  const idx = comparedProductNames.indexOf(row.name);
+  const idx = comparedProducts.indexOf(row);
   if (idx == -1) {
-    if (comparedProductNames.length >= 3) {
+    if (comparedProducts.length >= 3) {
       Message.info('最多添加3个产品进行比对')
       return;
     }
 
-    comparedProductNames.push(row.name);
+    comparedProducts.push(row);
   } else {
-    comparedProductNames.splice(idx, 1)
+    comparedProducts.splice(idx, 1)
   }
+  console.log('add ', comparedProducts);
 }
 
 const compareVisible = ref(true)
@@ -58,7 +55,7 @@ const compareVisible = ref(true)
 // 比对产品
 const compareProduct = () => {
 
-  if (comparedProductNames.length < 2) {
+  if (comparedProducts.length < 2) {
     Message.info('请选择至少两个产品进行比对')
     return;
   }
@@ -76,14 +73,14 @@ const compareProduct = () => {
       <LiteTable :table-headers="productTableHeaders" :table-data="productTableData">
         <template v-slot="scope">
           <z-button type="text" @click="addCompareProduct(scope.row)">
-            <span v-if="comparedProductNames.indexOf(scope.row.name) == -1">添加比对</span>
+            <span v-if="comparedProducts.indexOf(scope.row) == -1">添加比对</span>
             <span v-else style="color: gray;">取消比对</span>
           </z-button>
         </template>
       </LiteTable>
     </div>
     <div class="compare-area">
-      <CompareChart title="产品对比" :data="comparedProductList" v-model:visiable="compareVisible" />
+      <CompareChart title="产品对比" :data="comparedProducts" v-model:visiable="compareVisible" />
     </div>
   </div>
 </template>

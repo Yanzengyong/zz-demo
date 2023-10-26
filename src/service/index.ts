@@ -2,6 +2,7 @@ import request from './request';
 
 export interface Product {
     name: string,
+    company: string
 }
 export const getProductList = (chainNode): Promise<Array<Product>> => request.get('/product/list', { params: { chainNode } });
 

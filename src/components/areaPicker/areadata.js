@@ -1138,7 +1138,7 @@ export default [
     'name': '重庆'
   },
   {
-    'code': '税务总局',
-    'name': '税务总局'
+    'code': '税务局',
+    'name': '税务局'
   }
 ]
