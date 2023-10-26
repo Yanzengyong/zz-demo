@@ -45,7 +45,7 @@ const emit = defineEmits(['update:visiable'])
     height: 80%;
     top: 10%;
     padding: 20px;
-    background-color: aqua;
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.4) 100%);
     border-radius: $cardBorderRadius;
 
     @include flex(column, flex-start, flex-start);

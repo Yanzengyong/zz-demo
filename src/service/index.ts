@@ -27,7 +27,8 @@ export const getProductRelations = (productName: string): Promise<IProductRelati
 
 export interface Policy {
     title: string,
-    region: string
+    region: string,
+    fileType: string
 }
 
 

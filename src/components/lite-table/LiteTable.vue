@@ -9,9 +9,9 @@
         </div>
         <div class="lite-table-body">
             <div class="lite-table-body-row" v-for="row, i in tableData" :key="i" :class="{'active-row': i == activeIndex}">
-                <div class="lite-table-body-item" v-for="value, key, keyIndex in row" :key="key + i"
-                    :style="widthFilter(tableHeaders[keyIndex].width)">
-                    {{ value }}
+                <div class="lite-table-body-item" v-for="header, idx in tableHeaders.slice(0, tableHeaders.length -1)" :key="idx"
+                    :style="widthFilter(tableHeaders[idx].width)">
+                    {{ row[header.key] }}
                 </div>
 
                 <div class="lite-table-body-item" :style="widthFilter(tableHeaders[tableHeaders.length - 1].width)">
